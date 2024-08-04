@@ -67,8 +67,10 @@ export default function Home() {
     }
     setName('');
     setEditingItem(null);
-    const querySnapshot = await getDocs(collection(firestore, 'pantry'));
-    setItems(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+    if (typeof window !== 'undefined') {
+      const querySnapshot = await getDocs(collection(firestore, 'pantry'));
+      setItems(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+    }
   };
 
   const handleDelete = async (id) => {
