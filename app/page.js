@@ -55,7 +55,6 @@ export default function Home() {
     if (editingItem) {
       await updateDoc(doc(firestore, 'pantry', editingItem.id), { name });
     } else {
-      // Check if item already exists
       const q = query(collection(firestore, 'pantry'), where('name', '==', name));
       const querySnapshot = await getDocs(q);
       if (!querySnapshot.empty) {
@@ -144,7 +143,7 @@ export default function Home() {
               </Button>
             </form>
             <Typography variant="body1" gutterBottom style={{ fontFamily: "'SF Pro Text', 'Helvetica Neue', Arial, sans-serif" }}>
-              Total Items: {items.length}
+              Total Items: {items.reduce((total, item) => total + item.count, 0)}
             </Typography>
             <List>
               {items.map(item => (
