@@ -42,7 +42,6 @@ export default function Home() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      // Code that relies on window goes here
       const fetchItems = async () => {
         const querySnapshot = await getDocs(collection(firestore, 'pantry'));
         setItems(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
