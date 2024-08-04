@@ -41,11 +41,12 @@ export default function Home() {
   const [editingItem, setEditingItem] = useState(null);
 
   useEffect(() => {
+    const fetchItems = async () => {
+      const querySnapshot = await getDocs(collection(firestore, 'pantry'));
+      setItems(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+    };
+
     if (typeof window !== 'undefined') {
-      const fetchItems = async () => {
-        const querySnapshot = await getDocs(collection(firestore, 'pantry'));
-        setItems(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
-      };
       fetchItems();
     }
   }, []);
@@ -66,6 +67,7 @@ export default function Home() {
     }
     setName('');
     setEditingItem(null);
+
     if (typeof window !== 'undefined') {
       const querySnapshot = await getDocs(collection(firestore, 'pantry'));
       setItems(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
