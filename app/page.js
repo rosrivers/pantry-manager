@@ -41,11 +41,14 @@ export default function Home() {
   const [editingItem, setEditingItem] = useState(null);
 
   useEffect(() => {
-    const fetchItems = async () => {
-      const querySnapshot = await getDocs(collection(firestore, 'pantry'));
-      setItems(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
-    };
-    fetchItems();
+    if (typeof window !== 'undefined') {
+      // Code that relies on window goes here
+      const fetchItems = async () => {
+        const querySnapshot = await getDocs(collection(firestore, 'pantry'));
+        setItems(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+      };
+      fetchItems();
+    }
   }, []);
 
   const handleAddOrUpdate = async (e) => {
